@@ -1,0 +1,21 @@
+@font-face{
+    font-family: Paige;
+    src: url("../Sans-Serif/Paige.woff"); format("woff");
+}
+
+#paige{
+    font-family: Paige;
+    font-size: large;
+    width: 300px;
+    height: 300px;
+    border: solid 1px black;
+    overflow: scroll;
+    writing-mode: vertical-rl;
+}
+
+#latin{
+    width: 300px;
+    height: 300px;
+    resize: none
+}
+

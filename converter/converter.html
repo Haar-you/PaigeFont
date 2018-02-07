@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ラテン文字-&gt;パイグ文字変換</title>
+    <script type="text/javascript" src="converter.js"></script>
+    <link rel="stylesheet" type="text/css" href="converter.css">
+  </head>
+  <body>
+    <table>
+      <tr>
+	<td>
+	  <textarea id="latin"></textarea>
+	</td>
+	<td>
+	  <table>
+	    <tr><td><button onClick="convert()">convert</button></td></tr>
+	    <tr><td><input type="radio" name="writing" onClick="changeWritingMode('vertical-rl')" checked>縦書き</td></tr>
+	    <tr><td><input type="radio" name="writing" onClick="changeWritingMode('horizontal-tb')">横書き</td></tr>
+	  </table>
+	</td>
+	<td>
+	  <div id="paige"></div>
+	</td>
+      </tr>
+    </table>
+  </body>
+</html>
