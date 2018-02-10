@@ -130,12 +130,8 @@ function showPage(){
 	
 	result += `
 <div class="cell" onClick="showDetail(this)">
-<div class="latin">
-${searchResult[j][0]}
-</div>
-<div class="paige">
-${searchResult[j][1]}
-</div>
+<div class="latin">${searchResult[j][0]}</div>
+<div class="paige">${searchResult[j][1]}</div>
 </div>
 `;
     };
@@ -148,13 +144,57 @@ function showDetail(obj){
     var frameRight = document.getElementById("frameRight");
     var latin = obj.children[0].innerHTML;
     var paige = obj.children[1].innerHTML;
+    var ZWSP = String.fromCharCode(0x200b);
+
+    console.log(paige);
    
 
-    document.getElementById("displayLargePaige").innerHTML = paige;
-    document.getElementById("info").innerHTML = `
-ラテン文字転写: ${latin}
+    var canvasLP = document.getElementById("displayLargePaige");
+    var ctxLP = canvasLP.getContext("2d");
 
+    ctxLP.clearRect(0, 0, canvasLP.width, canvasLP.height);
+    //ctxLP.rect(0,0,200,200);
+    //ctxLP.stroke();
 
-`;
+    ctxLP.font = "200px Paige";
+    ctxLP.fillText(paige, 0, 200);
+
     
+    document.getElementById("info").innerHTML = `
+パイグ文字表記: <span style="font-family:Paige; font-size: x-large;">${paige}</span><br>
+パイグ文字分解表記: <span style="font-family:Paige; font-size: x-large;">${insertBetweenEachCharacter(decomposePaigeDiTriphthong(paige), ZWSP)}</span><br>
+ラテン文字転写: ${latin}`;
+    
+}
+
+function insertBetweenEachCharacter(str, t){
+    return str.replace(/(.)(?=.)/g, `$1${t}`);
+}
+
+
+var ditriToMono = {
+    0xe046: [fromLatinVw["i"], fromLatinVw["a"]],
+    0xe047: [fromLatinVw["u"], fromLatinVw["i"]],
+    0xe048: [fromLatinVw["i"], fromLatinVw["e"]],
+    0xe049: [fromLatinVw["u"], fromLatinVw["e"]],
+    0xe04a: [fromLatinVw["a"], fromLatinVw["i"]],
+    0xe04b: [fromLatinVw["u"], fromLatinVw["i"]],
+    0xe04c: [fromLatinVw["e"], fromLatinVw["i"]],
+    0xe04d: [fromLatinVw["a"], fromLatinVw["u"]],
+    0xe04e: [fromLatinVw["i"], fromLatinVw["o"]],
+    0xe04f: [fromLatinVw["u"], fromLatinVw["o"]],
+    0xe050: [fromLatinVw["i"], fromLatinVw["a"], fromLatinVw["i"]],
+    0xe051: [fromLatinVw["u"], fromLatinVw["a"], fromLatinVw["i"]],
+    0xe052: [fromLatinVw["i"], fromLatinVw["e"], fromLatinVw["i"]],
+    0xe053: [fromLatinVw["u"], fromLatinVw["e"], fromLatinVw["i"]],
+    0xe054: [fromLatinVw["i"], fromLatinVw["a"], fromLatinVw["u"]],
+    0xe055: [fromLatinVw["u"], fromLatinVw["a"], fromLatinVw["u"]]
+};
+
+
+
+function decomposePaigeDiTriphthong(str){
+    return str.replace(/[\ue046-\ue055]/g, function(){
+	return ditriToMono[arguments[0].charCodeAt()].join("");
+    });
 }

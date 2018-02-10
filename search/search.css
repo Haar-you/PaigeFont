@@ -25,6 +25,8 @@
 }
 
 #display{
+    overflow: auto;
+    height: 80%;
 }
 
 #frameLeft{
@@ -35,8 +37,14 @@
     background-color: white;
 }
 
+html{
+    height: 100%;
+}
+
 body{
     background-color: #ccffcc;
+    height: 100%;
+    margin: 0;
 }
 
 #frameRight{
@@ -50,10 +58,4 @@ body{
 #displayLargePaige{
     margin: 10px;
     background-color: white;
-    width: 200px;
-    height: 200px;
-    font-family: Paige;
-    font-size: 200px;
-    
-
 }
